@@ -15,7 +15,7 @@ This PoC bridges NI-DAQmx data collection to ROS over rosserial.
 - Apply the Linux Ethernet IP address to the `ros_server_ip.conf` text file in the `projects\flexrite-daqbridge-cli` directory of this repo on the Windows computer.
 - From the same `projects\flexrite-daqbridge-cli` directory within the code, open the `flexrite-daqbridge-cli.sln` file in Visual Studio 2022 IDE which was installed as a prerequisite.
 - From Visual Studio 2022 IDE, open the Solution Explorer by hitting `CRTL+ALT+L` and open the `flexrite-daqbridge-cli.cpp` file under `Source Files`.
-- Should you want to change the sampling rate from the default 100 Hz to 1000 Hz, change the value of `samplingRate` to `1000` in line 17.
+- Should you want to change the sampling rate from the default 100 Hz to 1000 Hz, change the value of `samplingRate` to `1000` in line 17. Also in line 16, change `timeStep` to `1`.
 - Before you run the code on the Windows computer, ensure that rosserial server is running on the Linux box.
 - To compile and run the program, hit `CTRL+F5`.
 - The program will start, connect to the rosserial server on the Linux box.
