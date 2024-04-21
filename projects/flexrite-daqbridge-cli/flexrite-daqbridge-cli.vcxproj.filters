@@ -27,6 +27,9 @@
     <ClCompile Include="..\..\lib\rosserial\WindowsSocket.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\quickDAQ.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\lib\rosserial\ros.h">
@@ -35,5 +38,58 @@
     <ClInclude Include="..\..\lib\rosserial\WindowsSocket.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\lib\quickDAQ\include\msunistd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\quickDAQ\include\quickDAQ.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\quickDAQ\include\stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\quickDAQ\include\targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\quickDAQ\lib\NI-DAQmx\include\ansi_c.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\quickDAQ\lib\NI-DAQmx\include\NIDAQmx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\quickDAQ\lib\NI-DAQmx\include\nisyscfg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\quickDAQ\lib\NI-DAQmx\include\nisyscfg_controller.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\quickDAQ\lib\NI-DAQmx\include\nisyscfg_errors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\quickDAQ\lib\NI-DAQmx\include\nisyscfg_pxi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\quickDAQ\lib\NI-DAQmx\include\nisyscfg_wide.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\cLinkedList\include\cLinkedList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\cLinkedList\include\macrodef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\matrixops.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\utilities.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\..\lib\quickDAQ\lib\NI-DAQmx\bin\msvc\x64\NIDAQmx.lib" />
+    <Library Include="..\..\lib\quickDAQ\lib\NI-DAQmx\bin\msvc\x64\nisyscfg.lib" />
+    <Library Include="..\..\lib\cLinkedList\bin\msvc\x64\cLinkedList.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\lib\cLinkedList\bin\msvc\x64\cLinkedList.pdb" />
   </ItemGroup>
 </Project>

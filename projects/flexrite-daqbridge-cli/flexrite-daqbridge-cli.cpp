@@ -9,11 +9,19 @@
 #include <geometry_msgs/Twist.h>
 #include <windows.h>
 #include <conio.h>
+#include "quickDAQ.h"
+#include "matrixops.h"
+#include "utilities.h"
 
 #define timeStep 10
+#define samplingRate 100
+#define NIDEVSLOT 6
+
+#define useHWtiming 0
 
 using std::string;
 using namespace std;
+using namespace matrixops;
 
 int main()
 {
@@ -47,11 +55,42 @@ int main()
     nh.advertise(cmd_vel_pub);
 
     printf("Starting Data acquisition! Press ESC or CTRL+C to stop data transmission...\n\n");
-    double wrench[6] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+    double wrench[6]        = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+    double offsetVoltage[6] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+    double rawVoltage[6]    = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+
+    quickDAQinit();
+    pinMode(NIDEVSLOT, ANALOG_IN, 0);
+    pinMode(NIDEVSLOT, ANALOG_IN, 1);
+    pinMode(NIDEVSLOT, ANALOG_IN, 2);
+    pinMode(NIDEVSLOT, ANALOG_IN, 8);
+    pinMode(NIDEVSLOT, ANALOG_IN, 9);
+    pinMode(NIDEVSLOT, ANALOG_IN, 10);
+    //pinMode(NIDEVSLOT, ANALOG_OUT, 0);
+
+    setSampleClockTiming((samplingModes) ((useHWtiming==0) ? ON_DEMAND : HW_CLOCKED),
+        samplingRate,
+        DAQmxClockSource,
+        (triggerModes)DAQmxTriggerEdge,
+        DAQmxNumDataPointsPerSample,
+        TRUE);
+
     bool liveFlag = TRUE;
     char keyStroke;
+
+    // Start DAQ and calibrate JR3
+    quickDAQstart();
+    syncSampling();
+    readAnalog_extBuf(6, offsetVoltage);
+    if (useHWtiming) syncSampling();
+
     while (liveFlag != FALSE)
     {
+        // Read raw voltages and remove offset. Then compute wrench...
+        readAnalog_extBuf(NIDEVSLOT, rawVoltage); // read from DAQ
+        vectorSub<double, 6>(rawVoltage, rawVoltage, offsetVoltage); // remove offset
+        matrixVectorMultiply<double, 6>(wrench, JR3_calibrationMatrix, rawVoltage); // compute wrench from voltages
+
         twist_msg.linear.x  = wrench[0];
         twist_msg.linear.y  = wrench[1];
         twist_msg.linear.z  = wrench[2];
@@ -70,11 +109,18 @@ int main()
                 liveFlag = FALSE;
             }
         } else {
-            Sleep(timeStep);
+            if (useHWtiming)
+                syncSampling();
+            else 
+                Sleep(timeStep);
         }
     }
 
+    if (useHWtiming) syncSampling();
+    quickDAQstop();
+    quickDAQTerminate();
     printf("\nAll done! Closing program...\n");
+
 
     return 0;
 }
