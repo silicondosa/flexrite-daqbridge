@@ -7,6 +7,8 @@ This PoC bridges NI-DAQmx data collection to ROS over rosserial.
 
 ## Instructions for use
 - Install the prerequisite software.
+- Connect the NI USB-6343 X series DAQ to the Windows computer. 
+- Open the `NI MAX` app on Windows and rename the USB DAQ that was just plugged in to `PXI1Slot6`.
 - Download the code from the GitHub repo.
 - Connect the Ethernet cables between the Windows and Linux computers.
 - Identify the IP address of the Ethernet connection on the Windows computer.
